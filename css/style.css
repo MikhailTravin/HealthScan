@@ -770,8 +770,8 @@ body {
 }
 
 .main-home__img {
-  width: auto;
-  height: 100%;
+  width: 857px;
+  height: 643px;
   opacity: 0;
   -webkit-transform: scale(0.9);
       -ms-transform: scale(0.9);
@@ -948,15 +948,6 @@ body {
   text-transform: capitalize;
   color: #95c123;
   margin: 0px 0px 10px 0px;
-  opacity: 0;
-  -webkit-transform: translateY(20px);
-      -ms-transform: translateY(20px);
-          transform: translateY(20px);
-  -webkit-transition: opacity 1.5s ease, -webkit-transform 1.5s ease;
-  transition: opacity 1.5s ease, -webkit-transform 1.5s ease;
-  -o-transition: opacity 1.5s ease, transform 1.5s ease;
-  transition: opacity 1.5s ease, transform 1.5s ease;
-  transition: opacity 1.5s ease, transform 1.5s ease, -webkit-transform 1.5s ease;
 }
 
 .top-main-home__title svg {
@@ -965,13 +956,6 @@ body {
   z-index: 4;
   top: 16px;
   margin: 0px 0px 0px 20px;
-}
-
-.top-main-home__title._watcher-view {
-  opacity: 1;
-  -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
-          transform: translateY(0);
 }
 
 .top-main-home__subtitle {
