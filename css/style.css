@@ -417,6 +417,14 @@ body {
   pointer-events: auto;
 }
 
+.menu__item:hover .menu__link {
+  color: #fff;
+}
+
+.menu__item:hover .menu__link svg {
+  fill: #fff;
+}
+
 .menu__link {
   display: -webkit-box;
   display: -ms-flexbox;
