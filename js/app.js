@@ -27,11 +27,6 @@
             if (window.FLS) console.log(message);
         }), 0);
     }
-    function uniqArray(array) {
-        return array.filter((function(item, index, self) {
-            return self.indexOf(item) === index;
-        }));
-    }
     let gotoblock_gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
         const targetBlockElement = document.querySelector(targetBlock);
         if (targetBlockElement) {
@@ -74,182 +69,145 @@
         viewPass: false,
         autoHeight: false
     }) {
-        document.body.addEventListener("focusin", (function(e) {
-            const targetElement = e.target;
-            if ("INPUT" === targetElement.tagName || "TEXTAREA" === targetElement.tagName) {
-                if (!targetElement.hasAttribute("data-no-focus-classes")) {
-                    targetElement.classList.add("_form-focus");
-                    targetElement.parentElement.classList.add("_form-focus");
-                }
-                formValidate.removeError(targetElement);
-                targetElement.hasAttribute("data-validate") ? formValidate.removeError(targetElement) : null;
+        document.body.addEventListener("focusin", (e => {
+            const target = e.target;
+            if (("INPUT" === target.tagName || "TEXTAREA" === target.tagName) && !target.hasAttribute("data-no-focus-classes")) {
+                target.classList.add("_form-focus");
+                target.parentElement.classList.add("_form-focus");
             }
         }));
-        document.body.addEventListener("focusout", (function(e) {
-            const targetElement = e.target;
-            if ("INPUT" === targetElement.tagName || "TEXTAREA" === targetElement.tagName) {
-                if (!targetElement.hasAttribute("data-no-focus-classes")) {
-                    targetElement.classList.remove("_form-focus");
-                    targetElement.parentElement.classList.remove("_form-focus");
+        document.body.addEventListener("focusout", (e => {
+            const target = e.target;
+            if (("INPUT" === target.tagName || "TEXTAREA" === target.tagName) && !target.hasAttribute("data-no-focus-classes")) {
+                if (!target.value.trim()) {
+                    target.classList.remove("_form-focus");
+                    target.parentElement.classList.remove("_form-focus");
                 }
-                targetElement.hasAttribute("data-validate") ? formValidate.validateInput(targetElement) : null;
+                if (target.hasAttribute("data-validate")) formValidate.validateInput(target);
             }
         }));
-        if (options.viewPass) document.addEventListener("click", (function(e) {
-            let targetElement = e.target;
-            if (targetElement.closest('[class*="__viewpass"]')) {
-                let inputType = targetElement.classList.contains("_viewpass-active") ? "password" : "text";
-                targetElement.parentElement.querySelector("input").setAttribute("type", inputType);
-                targetElement.classList.toggle("_viewpass-active");
+        if (options.viewPass) document.addEventListener("click", (e => {
+            const el = e.target.closest("[class*='__viewpass']");
+            if (el) {
+                const input = el.parentElement.querySelector("input");
+                const isVisible = el.classList.contains("_viewpass-active");
+                input.setAttribute("type", isVisible ? "password" : "text");
+                el.classList.toggle("_viewpass-active");
             }
         }));
-        if (options.autoHeight) {
-            const textareas = document.querySelectorAll("textarea[data-autoheight]");
-            if (textareas.length) {
-                textareas.forEach((textarea => {
-                    const startHeight = textarea.hasAttribute("data-autoheight-min") ? Number(textarea.dataset.autoheightMin) : Number(textarea.offsetHeight);
-                    const maxHeight = textarea.hasAttribute("data-autoheight-max") ? Number(textarea.dataset.autoheightMax) : 1 / 0;
-                    setHeight(textarea, Math.min(startHeight, maxHeight));
-                    textarea.addEventListener("input", (() => {
-                        if (textarea.scrollHeight > startHeight) {
-                            textarea.style.height = `auto`;
-                            setHeight(textarea, Math.min(Math.max(textarea.scrollHeight, startHeight), maxHeight));
-                        }
-                    }));
-                }));
-                function setHeight(textarea, height) {
-                    textarea.style.height = `${height}px`;
+        if (options.autoHeight) document.querySelectorAll("textarea[data-autoheight]").forEach((textarea => {
+            const min = Number(textarea.dataset.autoheightMin ?? textarea.offsetHeight);
+            const max = Number(textarea.dataset.autoheightMax ?? 1 / 0);
+            const setHeight = h => textarea.style.height = `${Math.min(h, max)}px`;
+            setHeight(min);
+            textarea.addEventListener("input", (() => {
+                if (textarea.scrollHeight > min) {
+                    textarea.style.height = "auto";
+                    setHeight(Math.max(textarea.scrollHeight, min));
                 }
-            }
-        }
-    }
-    let formValidate = {
-        getErrors(form) {
-            let error = 0;
-            let formRequiredItems = form.querySelectorAll("*[data-required]");
-            if (formRequiredItems.length) formRequiredItems.forEach((formRequiredItem => {
-                if ((null !== formRequiredItem.offsetParent || "SELECT" === formRequiredItem.tagName) && !formRequiredItem.disabled) error += this.validateInput(formRequiredItem);
             }));
-            return error;
+        }));
+    }
+    const formValidate = {
+        getErrors(form) {
+            let errorCount = 0;
+            const requiredFields = form.querySelectorAll("*[data-required]");
+            requiredFields.forEach((field => {
+                if ((null !== field.offsetParent || "SELECT" === field.tagName) && !field.disabled) errorCount += this.validateInput(field);
+            }));
+            return errorCount;
         },
-        validateInput(formRequiredItem) {
+        validateInput(field) {
             let error = 0;
-            if ("email" === formRequiredItem.dataset.required) {
-                formRequiredItem.value = formRequiredItem.value.replace(" ", "");
-                if (this.emailTest(formRequiredItem)) {
-                    this.addError(formRequiredItem);
-                    this.removeSuccess(formRequiredItem);
-                    error++;
-                } else {
-                    this.removeError(formRequiredItem);
-                    this.addSuccess(formRequiredItem);
-                }
-            } else if ("checkbox" === formRequiredItem.type && !formRequiredItem.checked) {
-                this.addError(formRequiredItem);
-                this.removeSuccess(formRequiredItem);
-                error++;
-            } else if (!formRequiredItem.value.trim()) {
-                this.addError(formRequiredItem);
-                this.removeSuccess(formRequiredItem);
-                error++;
-            } else {
-                this.removeError(formRequiredItem);
-                this.addSuccess(formRequiredItem);
+            if ("email" === field.dataset.required) {
+                field.value = field.value.replace(/\s/g, "");
+                if (this.emailTest(field)) error++;
+            } else if ("checkbox" === field.type && !field.checked) error++; else if (!field.value.trim()) error++;
+            if (error) this.addError(field); else {
+                this.removeError(field);
+                this.addSuccess(field);
             }
             return error;
         },
-        addError(formRequiredItem) {
-            formRequiredItem.classList.add("_form-error");
-            formRequiredItem.parentElement.classList.add("_form-error");
-            let inputError = formRequiredItem.parentElement.querySelector(".form__error");
-            if (inputError) formRequiredItem.parentElement.removeChild(inputError);
-            if (formRequiredItem.dataset.error) formRequiredItem.parentElement.insertAdjacentHTML("beforeend", `<div class="form__error">${formRequiredItem.dataset.error}</div>`);
+        addError(field) {
+            field.classList.add("_form-error");
+            field.parentElement.classList.add("_form-error");
+            if (field.dataset.error) {
+                let errorEl = field.parentElement.querySelector(".form__error");
+                if (errorEl) errorEl.remove();
+                field.parentElement.insertAdjacentHTML("beforeend", `<div class="form__error">${field.dataset.error}</div>`);
+            }
         },
-        removeError(formRequiredItem) {
-            formRequiredItem.classList.remove("_form-error");
-            formRequiredItem.parentElement.classList.remove("_form-error");
-            if (formRequiredItem.parentElement.querySelector(".form__error")) formRequiredItem.parentElement.removeChild(formRequiredItem.parentElement.querySelector(".form__error"));
+        removeError(field) {
+            field.classList.remove("_form-error");
+            field.parentElement.classList.remove("_form-error");
+            const errorEl = field.parentElement.querySelector(".form__error");
+            if (errorEl) errorEl.remove();
         },
-        addSuccess(formRequiredItem) {
-            formRequiredItem.classList.add("_form-success");
-            formRequiredItem.parentElement.classList.add("_form-success");
+        addSuccess(field) {
+            field.classList.add("_form-success");
+            field.parentElement.classList.add("_form-success");
         },
-        removeSuccess(formRequiredItem) {
-            formRequiredItem.classList.remove("_form-success");
-            formRequiredItem.parentElement.classList.remove("_form-success");
+        removeSuccess(field) {
+            field.classList.remove("_form-success");
+            field.parentElement.classList.remove("_form-success");
         },
         formClean(form) {
             form.reset();
             setTimeout((() => {
-                let inputs = form.querySelectorAll("input,textarea");
-                for (let index = 0; index < inputs.length; index++) {
-                    const el = inputs[index];
-                    el.parentElement.classList.remove("_form-focus");
+                const inputs = form.querySelectorAll("input, textarea, .checkbox__input");
+                inputs.forEach((el => {
                     el.classList.remove("_form-focus");
-                    formValidate.removeError(el);
-                }
-                let checkboxes = form.querySelectorAll(".checkbox__input");
-                if (checkboxes.length > 0) for (let index = 0; index < checkboxes.length; index++) {
-                    const checkbox = checkboxes[index];
-                    checkbox.checked = false;
-                }
-                if (modules_flsModules.select) {
-                    let selects = form.querySelectorAll("div.select");
-                    if (selects.length) for (let index = 0; index < selects.length; index++) {
-                        const select = selects[index].querySelector("select");
-                        modules_flsModules.select.selectBuild(select);
-                    }
-                }
+                    if (el.parentElement) el.parentElement.classList.remove("_form-focus");
+                    if ("checkbox" === el.type) el.checked = false;
+                    if (el.classList.contains("checkbox__input")) el.checked = false;
+                }));
+                if (window.flsModules?.select) form.querySelectorAll("div.select").forEach((selectWrap => {
+                    const select = selectWrap.querySelector("select");
+                    modules_flsModules.select.selectBuild(select);
+                }));
             }), 0);
         },
-        emailTest(formRequiredItem) {
-            return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(formRequiredItem.value);
+        emailTest(field) {
+            return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(field.value);
         }
     };
     function formSubmit() {
         const forms = document.forms;
-        if (forms.length) for (const form of forms) {
-            form.addEventListener("submit", (function(e) {
-                const form = e.target;
-                formSubmitAction(form, e);
-            }));
-            form.addEventListener("reset", (function(e) {
-                const form = e.target;
-                formValidate.formClean(form);
-            }));
+        if (!forms.length) return;
+        for (const form of forms) {
+            form.addEventListener("submit", (e => formSubmitAction(form, e)));
+            form.addEventListener("reset", (e => formValidate.formClean(e.target)));
         }
         async function formSubmitAction(form, e) {
-            const error = !form.hasAttribute("data-no-validate") ? formValidate.getErrors(form) : 0;
+            e.preventDefault();
+            const validate = !form.hasAttribute("data-no-validate");
+            const error = validate ? formValidate.getErrors(form) : 0;
             if (0 === error) {
-                const ajax = form.hasAttribute("data-ajax");
-                if (ajax) {
-                    e.preventDefault();
-                    const formAction = form.getAttribute("action") ? form.getAttribute("action").trim() : "#";
-                    const formMethod = form.getAttribute("method") ? form.getAttribute("method").trim() : "GET";
-                    const formData = new FormData(form);
+                if (form.hasAttribute("data-ajax")) {
                     form.classList.add("_sending");
-                    const response = await fetch(formAction, {
-                        method: formMethod,
-                        body: formData
-                    });
-                    if (response.ok) {
-                        let responseResult = await response.json();
+                    try {
+                        const action = form.getAttribute("action") || "#";
+                        const method = form.getAttribute("method") || "GET";
+                        const data = new FormData(form);
+                        const response = await fetch(action, {
+                            method,
+                            body: data
+                        });
+                        if (response.ok) {
+                            const result = await response.json();
+                            formSent(form, result);
+                        } else alert("Ошибка");
                         form.classList.remove("_sending");
-                        formSent(form, responseResult);
-                    } else {
-                        alert("Помилка");
+                    } catch (err) {
+                        console.error(err);
+                        alert("Ошибка при отправке формы");
                         form.classList.remove("_sending");
                     }
-                } else if (form.hasAttribute("data-dev")) {
-                    e.preventDefault();
-                    formSent(form);
-                }
-            } else {
-                e.preventDefault();
-                if (form.querySelector("._form-error") && form.hasAttribute("data-goto-error")) {
-                    const formGoToErrorClass = form.dataset.gotoError ? form.dataset.gotoError : "._form-error";
-                    gotoblock_gotoBlock(formGoToErrorClass, true, 1e3);
-                }
+                } else if (form.hasAttribute("data-dev")) formSent(form);
+            } else if (form.querySelector("._form-error") && form.hasAttribute("data-goto-error")) {
+                const selector = form.dataset.gotoError || "._form-error";
+                gotoblock_gotoBlock(selector, true, 1e3);
             }
         }
         function formSent(form, responseResult = ``) {
@@ -258,17 +216,12 @@
                     form
                 }
             }));
-            setTimeout((() => {
-                if (modules_flsModules.popup) {
-                    const popup = form.dataset.popupMessage;
-                    popup ? modules_flsModules.popup.open(popup) : null;
-                }
-            }), 0);
+            if (window.flsModules?.popup && form.dataset.popupMessage) modules_flsModules.popup.open(form.dataset.popupMessage);
             formValidate.formClean(form);
             formLogging(`Форму відправлено!`);
         }
         function formLogging(message) {
-            FLS(`[Форми]: ${message}`);
+            window.FLS?.(`[Форми]: ${message}`);
         }
     }
     function ssr_window_esm_isObject(obj) {
@@ -3422,132 +3375,71 @@
         }
     });
     class ScrollWatcher {
-        constructor(props) {
-            let defaultConfig = {
-                logging: true
+        constructor({logging = true} = {}) {
+            this.config = {
+                logging
             };
-            this.config = Object.assign(defaultConfig, props);
-            this.observer;
-            !document.documentElement.classList.contains("watcher") ? this.scrollWatcherRun() : null;
-        }
-        scrollWatcherUpdate() {
-            this.scrollWatcherRun();
-        }
-        scrollWatcherRun() {
-            document.documentElement.classList.add("watcher");
-            this.scrollWatcherConstructor(document.querySelectorAll("[data-watch]"));
-        }
-        scrollWatcherConstructor(items) {
-            if (items.length) {
-                this.scrollWatcherLogging(`Прокинувся, стежу за об'єктами (${items.length})...`);
-                let uniqParams = uniqArray(Array.from(items).map((function(item) {
-                    if ("navigator" === item.dataset.watch && !item.dataset.watchThreshold) {
-                        let valueOfThreshold;
-                        if (item.clientHeight > 2) {
-                            valueOfThreshold = window.innerHeight / 2 / (item.clientHeight - 1);
-                            if (valueOfThreshold > 1) valueOfThreshold = 1;
-                        } else valueOfThreshold = 1;
-                        item.setAttribute("data-watch-threshold", valueOfThreshold.toFixed(2));
-                    }
-                    return `${item.dataset.watchRoot ? item.dataset.watchRoot : null}|${item.dataset.watchMargin ? item.dataset.watchMargin : "0px"}|${item.dataset.watchThreshold ? item.dataset.watchThreshold : 0}`;
-                })));
-                uniqParams.forEach((uniqParam => {
-                    let uniqParamArray = uniqParam.split("|");
-                    let paramsWatch = {
-                        root: uniqParamArray[0],
-                        margin: uniqParamArray[1],
-                        threshold: uniqParamArray[2]
-                    };
-                    let groupItems = Array.from(items).filter((function(item) {
-                        let watchRoot = item.dataset.watchRoot ? item.dataset.watchRoot : null;
-                        let watchMargin = item.dataset.watchMargin ? item.dataset.watchMargin : "0px";
-                        let watchThreshold = item.dataset.watchThreshold ? item.dataset.watchThreshold : 0;
-                        if (String(watchRoot) === paramsWatch.root && String(watchMargin) === paramsWatch.margin && String(watchThreshold) === paramsWatch.threshold) return item;
-                    }));
-                    let configWatcher = this.getScrollWatcherConfig(paramsWatch);
-                    this.scrollWatcherInit(groupItems, configWatcher);
-                }));
-            } else this.scrollWatcherLogging("Сплю, немає об'єктів для стеження. ZzzZZzz");
-        }
-        getScrollWatcherConfig(paramsWatch) {
-            let configWatcher = {};
-            if (document.querySelector(paramsWatch.root)) configWatcher.root = document.querySelector(paramsWatch.root); else if ("null" !== paramsWatch.root) this.scrollWatcherLogging(`Эмм... батьківського об'єкта ${paramsWatch.root} немає на сторінці`);
-            configWatcher.rootMargin = paramsWatch.margin;
-            if (paramsWatch.margin.indexOf("px") < 0 && paramsWatch.margin.indexOf("%") < 0) {
-                this.scrollWatcherLogging(`йой, налаштування data-watch-margin потрібно задавати в PX або %`);
-                return;
-            }
-            if ("prx" === paramsWatch.threshold) {
-                paramsWatch.threshold = [];
-                for (let i = 0; i <= 1; i += .005) paramsWatch.threshold.push(i);
-            } else paramsWatch.threshold = paramsWatch.threshold.split(",");
-            configWatcher.threshold = paramsWatch.threshold;
-            return configWatcher;
-        }
-        scrollWatcherCreate(configWatcher) {
-            console.log(configWatcher);
-            this.observer = new IntersectionObserver(((entries, observer) => {
-                entries.forEach((entry => {
-                    this.scrollWatcherCallback(entry, observer);
-                }));
-            }), configWatcher);
-        }
-        scrollWatcherInit(items, configWatcher) {
-            this.scrollWatcherCreate(configWatcher);
-            items.forEach((item => this.observer.observe(item)));
-        }
-        scrollWatcherIntersecting(entry, targetElement) {
-            if (entry.isIntersecting) {
-                !targetElement.classList.contains("_watcher-view") ? targetElement.classList.add("_watcher-view") : null;
-                this.scrollWatcherLogging(`Я бачу ${targetElement.classList}, додав клас _watcher-view`);
-            } else {
-                targetElement.classList.contains("_watcher-view") ? targetElement.classList.remove("_watcher-view") : null;
-                this.scrollWatcherLogging(`Я не бачу ${targetElement.classList}, прибрав клас _watcher-view`);
+            this.observer = null;
+            if (!document.documentElement.classList.contains("watcher")) {
+                document.documentElement.classList.add("watcher");
+                this.init();
             }
         }
-        scrollWatcherOff(targetElement, observer) {
-            observer.unobserve(targetElement);
-            this.scrollWatcherLogging(`Я перестав стежити за ${targetElement.classList}`);
-        }
-        scrollWatcherLogging(message) {
-            this.config.logging ? FLS(`[Спостерігач]: ${message}`) : null;
-        }
-        scrollWatcherCallback(entry, observer) {
-            const targetElement = entry.target;
-            this.scrollWatcherIntersecting(entry, targetElement);
-            targetElement.hasAttribute("data-watch-once") && entry.isIntersecting ? this.scrollWatcherOff(targetElement, observer) : null;
-            document.dispatchEvent(new CustomEvent("watcherCallback", {
-                detail: {
-                    entry
-                }
+        init() {
+            const items = document.querySelectorAll("[data-watch]");
+            if (!items.length) return;
+            this.scrollWatcherLogging(`Начало наблюдения за ${items.length} элементами`);
+            this.createObserver();
+            items.forEach((item => {
+                this.observer.observe(item);
             }));
         }
+        createObserver() {
+            const config = {
+                root: null,
+                rootMargin: "0px",
+                threshold: .1
+            };
+            this.observer = new IntersectionObserver((entries => {
+                entries.forEach((entry => {
+                    const target = entry.target;
+                    if (entry.isIntersecting) target.classList.add("_watcher-view"); else target.classList.remove("_watcher-view");
+                    if (target.hasAttribute("data-watch-once") && entry.isIntersecting) this.observer.unobserve(target);
+                    document.dispatchEvent(new CustomEvent("watcherCallback", {
+                        detail: {
+                            entry
+                        }
+                    }));
+                }));
+            }), config);
+        }
+        scrollWatcherLogging(message) {
+            if (this.config.logging) console.log(`[ScrollWatcher]: ${message}`);
+        }
     }
-    modules_flsModules.watcher = new ScrollWatcher({});
+    if ("undefined" !== typeof modules_flsModules) modules_flsModules.watcher = new ScrollWatcher({});
     let addWindowScrollEvent = false;
     function headerScroll() {
-        addWindowScrollEvent = true;
         const header = document.querySelector("header.header");
+        if (!header) return;
         const headerShow = header.hasAttribute("data-scroll-show");
-        const headerShowTimer = header.dataset.scrollShow ? header.dataset.scrollShow : 500;
-        const startPoint = header.dataset.scroll ? header.dataset.scroll : 1;
+        const headerShowTimer = parseInt(header.dataset.scrollShow) || 500;
+        const startPoint = parseInt(header.dataset.scroll) || 1;
         let scrollDirection = 0;
-        let timer;
-        document.addEventListener("windowScroll", (function(e) {
+        let timer = null;
+        addWindowScrollEvent = true;
+        document.addEventListener("windowScroll", (e => {
             const scrollTop = window.scrollY;
             clearTimeout(timer);
             if (scrollTop >= startPoint) {
-                !header.classList.contains("_header-scroll") ? header.classList.add("_header-scroll") : null;
-                if (headerShow) {
-                    if (scrollTop > scrollDirection) header.classList.contains("_header-show") ? header.classList.remove("_header-show") : null; else !header.classList.contains("_header-show") ? header.classList.add("_header-show") : null;
+                header.classList.add("_header-scroll");
+                if (headerShow) if (scrollTop > scrollDirection) header.classList.remove("_header-show"); else {
+                    header.classList.add("_header-show");
                     timer = setTimeout((() => {
-                        !header.classList.contains("_header-show") ? header.classList.add("_header-show") : null;
+                        header.classList.add("_header-show");
                     }), headerShowTimer);
                 }
-            } else {
-                header.classList.contains("_header-scroll") ? header.classList.remove("_header-scroll") : null;
-                if (headerShow) header.classList.contains("_header-show") ? header.classList.remove("_header-show") : null;
-            }
+            } else header.classList.remove("_header-scroll", "_header-show");
             scrollDirection = scrollTop <= 0 ? 0 : scrollTop;
         }));
     }
