@@ -5285,42 +5285,54 @@ PERFORMANCE OF THIS SOFTWARE.
         modules_flsModules.gallery = galleyItems;
     }
     const mapElement = document.querySelector("#map");
-    if (mapElement && "undefined" !== typeof ymaps) {
+    if (mapElement) {
         const mapObserver = new IntersectionObserver((entries => {
             entries.forEach((entry => {
                 if (entry.isIntersecting) {
-                    if (!mapElement.dataset.initialized) ymaps.ready(initMainMap);
                     mapObserver.unobserve(mapElement);
+                    if ("undefined" === typeof ymaps) {
+                        const script = document.createElement("script");
+                        script.src = "https://api-maps.yandex.ru/2.1/?modules=Map,Placemark&lang=ru_RU";
+                        script.async = true;
+                        script.onload = () => {
+                            ymaps.ready(initMainMap);
+                        };
+                        document.head.appendChild(script);
+                    } else ymaps.ready(initMainMap);
                 }
             }));
         }), {
             rootMargin: "0px 0px 200px 0px"
         });
         mapObserver.observe(mapElement);
-    } else if (mapElement) console.warn("Yandex Maps API не загружено для карты #map");
+    }
     function initMainMap() {
-        try {
+        requestIdleCallback((() => {
             const mapElement = document.getElementById("map");
-            if (!mapElement || mapElement.dataset.initialized) return;
-            var myMap = new ymaps.Map("map", {
-                center: [ 44.036938, 43.069484 ],
-                zoom: 8,
-                controls: [ "zoomControl" ],
-                behaviors: [ "drag" ]
-            }, {
-                searchControlProvider: "yandex#search"
-            });
-            const placemark1 = new ymaps.Placemark([ 43.918688, 42.701534 ], {}, {
-                iconLayout: "default#image",
-                iconImageHref: "img/icons/location.svg",
-                iconImageSize: [ 28, 36 ],
-                iconImageOffset: [ -14, -36 ]
-            });
-            myMap.geoObjects.add(placemark1);
-            mapElement.dataset.initialized = "true";
-        } catch (error) {
-            console.error("Ошибка при инициализации карты #map:", error);
-        }
+            if (!mapElement || "true" === mapElement.dataset.initialized) return;
+            try {
+                const preview = mapElement.querySelector(".map-preview");
+                if (preview) preview.remove();
+                const myMap = new ymaps.Map("map", {
+                    center: [ 44.036938, 43.069484 ],
+                    zoom: 8,
+                    controls: [ "zoomControl" ],
+                    behaviors: [ "drag" ]
+                }, {
+                    searchControlProvider: "yandex#search"
+                });
+                const placemark1 = new ymaps.Placemark([ 43.918688, 42.701534 ], {}, {
+                    iconLayout: "default#image",
+                    iconImageHref: "img/icons/location.svg",
+                    iconImageSize: [ 28, 36 ],
+                    iconImageOffset: [ -14, -36 ]
+                });
+                myMap.geoObjects.add(placemark1);
+                mapElement.dataset.initialized = "true";
+            } catch (error) {
+                console.error("Ошибка при инициализации карты:", error);
+            }
+        }));
     }
     function indents() {
         const header = document.querySelector(".header");
