@@ -5346,23 +5346,6 @@ PERFORMANCE OF THIS SOFTWARE.
         indents();
     }));
     indents();
-    document.querySelectorAll("[data-video-id]").forEach((container => {
-        container.addEventListener("click", (function() {
-            const videoId = this.getAttribute("data-video-id");
-            const iframe = document.createElement("iframe");
-            iframe.setAttribute("width", "560");
-            iframe.setAttribute("height", "315");
-            iframe.setAttribute("src", `https://www.youtube.com/embed/${videoId}?autoplay=1`);
-            iframe.setAttribute("title", "YouTube video player");
-            iframe.setAttribute("frameborder", "0");
-            iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
-            iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-            iframe.setAttribute("allowfullscreen", "");
-            iframe.setAttribute("loading", "lazy");
-            this.innerHTML = "";
-            this.appendChild(iframe);
-        }));
-    }));
     window["FLS"] = false;
     formFieldsInit({
         viewPass: false,
