@@ -407,6 +407,15 @@ body {
   gap: 10px 32px;
 }
 
+.menu__item {
+  position: relative;
+}
+
+.menu__item:hover .menu__subitems {
+  opacity: 1;
+  visibility: visible;
+}
+
 .menu__link {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -445,6 +454,98 @@ body {
 
 .menu__link.active svg {
   fill: #fff;
+}
+
+.menu__subitems {
+  position: absolute;
+  padding: 16px 0px 0px 0px;
+  top: 100%;
+  width: 630px;
+  height: 224px;
+  left: -30px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease, visibility 0.3s ease;
+  -o-transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu__subitems ul {
+  padding: 0px 9px;
+}
+
+.menu__subitems ul li {
+  gap: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.menu__subitems ul li a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 4px 4px 4px 10px;
+  -webkit-transition: background-color 0.3s ease 0s;
+  -o-transition: background-color 0.3s ease 0s;
+  transition: background-color 0.3s ease 0s;
+  border-radius: 8px;
+}
+
+.menu__subitems ul li a img {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin: 0px 20px 0px 0px;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+
+.menu__subitems ul li a span {
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: color 0.3s ease 0s;
+  -o-transition: color 0.3s ease 0s;
+  transition: color 0.3s ease 0s;
+}
+
+.menu__subitems ul li a:hover {
+  background-color: #131313;
+}
+
+.menu__subitems ul li a:hover img {
+  opacity: 1;
+}
+
+.menu__subitems ul li a:hover span {
+  color: #fff;
+}
+
+.menu__subitem {
+  border-radius: 24px;
+  padding: 16px;
+  background: #010710;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+}
+
+.menu__subitem::-webkit-scrollbar {
+  display: none;
 }
 
 .icon-menu {
