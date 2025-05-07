@@ -700,6 +700,14 @@ body {
   position: relative;
   background-color: #010710;
   border-radius: 0px 0px 60px 60px;
+  opacity: 0;
+  -webkit-transition: opacity 1s ease;
+  -o-transition: opacity 1s ease;
+  transition: opacity 1s ease;
+}
+
+.main-home._watcher-view {
+  opacity: 1;
 }
 
 .main-home__bg {
