@@ -5284,29 +5284,42 @@ PERFORMANCE OF THIS SOFTWARE.
         }));
         modules_flsModules.gallery = galleyItems;
     }
-    const map = document.querySelector("#map");
-    if (map) {
-        if ("undefined" !== typeof ymaps) ymaps.ready((() => initMainMap())); else console.warn("Yandex Maps API не загружено для карты #map");
-        function initMainMap() {
-            try {
-                var myMap = new ymaps.Map("map", {
-                    center: [ 44.036938, 43.069484 ],
-                    zoom: 8,
-                    controls: [ "zoomControl" ],
-                    behaviors: [ "drag" ]
-                }, {
-                    searchControlProvider: "yandex#search"
-                });
-                const placemark1 = new ymaps.Placemark([ 43.918688, 42.701534 ], {}, {
-                    iconLayout: "default#image",
-                    iconImageHref: "img/icons/location.svg",
-                    iconImageSize: [ 28, 36 ],
-                    iconImageOffset: [ -14, -36 ]
-                });
-                myMap.geoObjects.add(placemark1);
-            } catch (error) {
-                console.error("Ошибка при инициализации карты #map:", error);
-            }
+    const mapElement = document.querySelector("#map");
+    if (mapElement && "undefined" !== typeof ymaps) {
+        const mapObserver = new IntersectionObserver((entries => {
+            entries.forEach((entry => {
+                if (entry.isIntersecting) {
+                    if (!mapElement.dataset.initialized) ymaps.ready(initMainMap);
+                    mapObserver.unobserve(mapElement);
+                }
+            }));
+        }), {
+            rootMargin: "0px 0px 200px 0px"
+        });
+        mapObserver.observe(mapElement);
+    } else if (mapElement) console.warn("Yandex Maps API не загружено для карты #map");
+    function initMainMap() {
+        try {
+            const mapElement = document.getElementById("map");
+            if (!mapElement || mapElement.dataset.initialized) return;
+            var myMap = new ymaps.Map("map", {
+                center: [ 44.036938, 43.069484 ],
+                zoom: 8,
+                controls: [ "zoomControl" ],
+                behaviors: [ "drag" ]
+            }, {
+                searchControlProvider: "yandex#search"
+            });
+            const placemark1 = new ymaps.Placemark([ 43.918688, 42.701534 ], {}, {
+                iconLayout: "default#image",
+                iconImageHref: "img/icons/location.svg",
+                iconImageSize: [ 28, 36 ],
+                iconImageOffset: [ -14, -36 ]
+            });
+            myMap.geoObjects.add(placemark1);
+            mapElement.dataset.initialized = "true";
+        } catch (error) {
+            console.error("Ошибка при инициализации карты #map:", error);
         }
     }
     function indents() {
@@ -5333,6 +5346,23 @@ PERFORMANCE OF THIS SOFTWARE.
         indents();
     }));
     indents();
+    document.querySelectorAll("[data-video-id]").forEach((container => {
+        container.addEventListener("click", (function() {
+            const videoId = this.getAttribute("data-video-id");
+            const iframe = document.createElement("iframe");
+            iframe.setAttribute("width", "560");
+            iframe.setAttribute("height", "315");
+            iframe.setAttribute("src", `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+            iframe.setAttribute("title", "YouTube video player");
+            iframe.setAttribute("frameborder", "0");
+            iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+            iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+            iframe.setAttribute("allowfullscreen", "");
+            iframe.setAttribute("loading", "lazy");
+            this.innerHTML = "";
+            this.appendChild(iframe);
+        }));
+    }));
     window["FLS"] = false;
     formFieldsInit({
         viewPass: false,
