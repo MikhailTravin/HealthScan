@@ -5232,16 +5232,6 @@ PERFORMANCE OF THIS SOFTWARE.
         let hHeader = window.getComputedStyle(header, false).height;
         hHeader = Number(hHeader.slice(0, hHeader.length - 2));
         if (page) page.style.paddingTop = hHeader + "px";
-        const menuBody = document.querySelector(".menu__body");
-        if (menuBody) if (document.documentElement.clientWidth < 991.98) {
-            menuBody.style.top = hHeader + "px";
-            menuBody.style.minHeight = `calc(100vh - ${hHeader}px)`;
-            menuBody.style.height = `calc(100vh - ${hHeader}px)`;
-        } else {
-            menuBody.style.top = "0px";
-            menuBody.style.minHeight = "auto";
-            menuBody.style.height = "auto";
-        }
     }
     window.addEventListener("scroll", (() => {
         indents();
