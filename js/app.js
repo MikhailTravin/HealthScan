@@ -5347,16 +5347,16 @@ PERFORMANCE OF THIS SOFTWARE.
                     mapObserver.unobserve(mapElement);
                     if ("undefined" === typeof ymaps) {
                         const script = document.createElement("script");
-                        script.src = "https://api-maps.yandex.ru/2.1/?modules=Map,Placemark&lang=ru_RU";
+                        script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU";
                         script.async = true;
                         script.onload = () => {
-                            if ("undefined" !== typeof ymaps) safeInitMap();
+                            if ("undefined" !== typeof ymaps) ymaps.ready(safeInitMap);
                         };
                         script.onerror = () => {
                             console.error("Yandex Maps failed to load");
                         };
                         document.head.appendChild(script);
-                    } else safeInitMap();
+                    } else ymaps.ready(safeInitMap);
                 }
             }));
         }), {
@@ -5365,35 +5365,34 @@ PERFORMANCE OF THIS SOFTWARE.
         mapObserver.observe(mapElement);
     }
     function safeInitMap() {
-        const callback = window.requestIdleCallback || function(cb) {
-            return setTimeout(cb, 0);
-        };
-        callback((() => {
-            const mapElement = document.getElementById("map");
-            if (!mapElement || "true" === mapElement.dataset.initialized) return;
-            try {
-                const preview = mapElement.querySelector(".map-preview");
-                if (preview) preview.remove();
-                const myMap = new ymaps.Map("map", {
-                    center: [ 59.890175, 30.411566 ],
-                    zoom: 15,
-                    controls: [ "zoomControl" ],
-                    behaviors: [ "drag" ]
-                }, {
-                    searchControlProvider: "yandex#search"
-                });
-                const placemark1 = new ymaps.Placemark([ 59.890175, 30.411566 ], {}, {
-                    iconLayout: "default#image",
-                    iconImageHref: "img/icons/location.svg",
-                    iconImageSize: [ 28, 36 ],
-                    iconImageOffset: [ -14, -36 ]
-                });
-                myMap.geoObjects.add(placemark1);
-                mapElement.dataset.initialized = "true";
-            } catch (error) {
-                console.error("Map init error:", error);
-            }
-        }));
+        const mapElement = document.getElementById("map");
+        if (!mapElement || "true" === mapElement.dataset.initialized) return;
+        try {
+            const preview = mapElement.querySelector(".map-preview");
+            if (preview) preview.remove();
+            const myMap = new ymaps.Map("map", {
+                center: [ 59.890175, 30.411566 ],
+                zoom: 18,
+                controls: [ "zoomControl" ]
+            });
+            myMap.options.set("styles", [ {
+                featureType: "all",
+                elementType: "geometry",
+                stylers: [ {
+                    color: "#242f3e"
+                } ]
+            } ]);
+            const placemark = new ymaps.Placemark([ 59.890175, 30.411566 ], {}, {
+                iconLayout: "default#image",
+                iconImageHref: "img/icons/location.svg",
+                iconImageSize: [ 28, 36 ],
+                iconImageOffset: [ -14, -36 ]
+            });
+            myMap.geoObjects.add(placemark);
+            mapElement.dataset.initialized = "true";
+        } catch (error) {
+            console.error("Map init error:", error);
+        }
     }
     function indents() {
         const header = document.querySelector(".header");

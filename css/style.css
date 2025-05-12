@@ -425,6 +425,10 @@ body {
   fill: #fff;
 }
 
+.menu__item:hover .menu__link span {
+  text-decoration: underline;
+}
+
 .menu__link {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -455,6 +459,10 @@ body {
 
 .menu__link:hover svg {
   fill: #fff;
+}
+
+.menu__link:hover span {
+  text-decoration: underline;
 }
 
 .menu__link.active {
@@ -517,44 +525,36 @@ body {
   -o-object-fit: contain;
      object-fit: contain;
   margin: 0px 20px 0px 0px;
-  opacity: 0.7;
-  -webkit-transition: opacity 0.3s ease 0s;
-  -o-transition: opacity 0.3s ease 0s;
-  transition: opacity 0.3s ease 0s;
 }
 
 .menu__subitems ul li a span {
   font-weight: 300;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: color 0.3s ease 0s;
-  -o-transition: color 0.3s ease 0s;
-  transition: color 0.3s ease 0s;
 }
 
 .menu__subitems ul li a:hover {
-  background-color: #131313;
-}
-
-.menu__subitems ul li a:hover img {
-  opacity: 1;
+  background-color: #f3f3f3;
 }
 
 .menu__subitems ul li a:hover span {
-  color: #fff;
+  text-decoration: underline;
+}
+
+.menu__subitems.small-subitems {
+  width: 321px;
 }
 
 .menu__subitem {
   border-radius: 24px;
   padding: 16px;
-  background: #010710;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   gap: 20px;
+  background: #ffffff;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .menu__subitem::-webkit-scrollbar {
