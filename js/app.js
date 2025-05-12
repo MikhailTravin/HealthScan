@@ -3362,13 +3362,176 @@
             destroy
         });
     }
+    function Autoplay(_ref) {
+        let {swiper, extendParams, on, emit} = _ref;
+        let timeout;
+        swiper.autoplay = {
+            running: false,
+            paused: false
+        };
+        extendParams({
+            autoplay: {
+                enabled: false,
+                delay: 3e3,
+                waitForTransition: true,
+                disableOnInteraction: true,
+                stopOnLastSlide: false,
+                reverseDirection: false,
+                pauseOnMouseEnter: false
+            }
+        });
+        function run() {
+            if (!swiper.size) {
+                swiper.autoplay.running = false;
+                swiper.autoplay.paused = false;
+                return;
+            }
+            const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
+            let delay = swiper.params.autoplay.delay;
+            if ($activeSlideEl.attr("data-swiper-autoplay")) delay = $activeSlideEl.attr("data-swiper-autoplay") || swiper.params.autoplay.delay;
+            clearTimeout(timeout);
+            timeout = utils_nextTick((() => {
+                let autoplayResult;
+                if (swiper.params.autoplay.reverseDirection) if (swiper.params.loop) {
+                    swiper.loopFix();
+                    autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else if (!swiper.isBeginning) {
+                    autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else if (!swiper.params.autoplay.stopOnLastSlide) {
+                    autoplayResult = swiper.slideTo(swiper.slides.length - 1, swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else stop(); else if (swiper.params.loop) {
+                    swiper.loopFix();
+                    autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else if (!swiper.isEnd) {
+                    autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else if (!swiper.params.autoplay.stopOnLastSlide) {
+                    autoplayResult = swiper.slideTo(0, swiper.params.speed, true, true);
+                    emit("autoplay");
+                } else stop();
+                if (swiper.params.cssMode && swiper.autoplay.running) run(); else if (false === autoplayResult) run();
+            }), delay);
+        }
+        function start() {
+            if ("undefined" !== typeof timeout) return false;
+            if (swiper.autoplay.running) return false;
+            swiper.autoplay.running = true;
+            emit("autoplayStart");
+            run();
+            return true;
+        }
+        function stop() {
+            if (!swiper.autoplay.running) return false;
+            if ("undefined" === typeof timeout) return false;
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = void 0;
+            }
+            swiper.autoplay.running = false;
+            emit("autoplayStop");
+            return true;
+        }
+        function pause(speed) {
+            if (!swiper.autoplay.running) return;
+            if (swiper.autoplay.paused) return;
+            if (timeout) clearTimeout(timeout);
+            swiper.autoplay.paused = true;
+            if (0 === speed || !swiper.params.autoplay.waitForTransition) {
+                swiper.autoplay.paused = false;
+                run();
+            } else [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
+                swiper.$wrapperEl[0].addEventListener(event, onTransitionEnd);
+            }));
+        }
+        function onVisibilityChange() {
+            const document = ssr_window_esm_getDocument();
+            if ("hidden" === document.visibilityState && swiper.autoplay.running) pause();
+            if ("visible" === document.visibilityState && swiper.autoplay.paused) {
+                run();
+                swiper.autoplay.paused = false;
+            }
+        }
+        function onTransitionEnd(e) {
+            if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
+            if (e.target !== swiper.$wrapperEl[0]) return;
+            [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
+                swiper.$wrapperEl[0].removeEventListener(event, onTransitionEnd);
+            }));
+            swiper.autoplay.paused = false;
+            if (!swiper.autoplay.running) stop(); else run();
+        }
+        function onMouseEnter() {
+            if (swiper.params.autoplay.disableOnInteraction) stop(); else {
+                emit("autoplayPause");
+                pause();
+            }
+            [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
+                swiper.$wrapperEl[0].removeEventListener(event, onTransitionEnd);
+            }));
+        }
+        function onMouseLeave() {
+            if (swiper.params.autoplay.disableOnInteraction) return;
+            swiper.autoplay.paused = false;
+            emit("autoplayResume");
+            run();
+        }
+        function attachMouseEvents() {
+            if (swiper.params.autoplay.pauseOnMouseEnter) {
+                swiper.$el.on("mouseenter", onMouseEnter);
+                swiper.$el.on("mouseleave", onMouseLeave);
+            }
+        }
+        function detachMouseEvents() {
+            swiper.$el.off("mouseenter", onMouseEnter);
+            swiper.$el.off("mouseleave", onMouseLeave);
+        }
+        on("init", (() => {
+            if (swiper.params.autoplay.enabled) {
+                start();
+                const document = ssr_window_esm_getDocument();
+                document.addEventListener("visibilitychange", onVisibilityChange);
+                attachMouseEvents();
+            }
+        }));
+        on("beforeTransitionStart", ((_s, speed, internal) => {
+            if (swiper.autoplay.running) if (internal || !swiper.params.autoplay.disableOnInteraction) swiper.autoplay.pause(speed); else stop();
+        }));
+        on("sliderFirstMove", (() => {
+            if (swiper.autoplay.running) if (swiper.params.autoplay.disableOnInteraction) stop(); else pause();
+        }));
+        on("touchEnd", (() => {
+            if (swiper.params.cssMode && swiper.autoplay.paused && !swiper.params.autoplay.disableOnInteraction) run();
+        }));
+        on("destroy", (() => {
+            detachMouseEvents();
+            if (swiper.autoplay.running) stop();
+            const document = ssr_window_esm_getDocument();
+            document.removeEventListener("visibilitychange", onVisibilityChange);
+        }));
+        Object.assign(swiper.autoplay, {
+            pause,
+            run,
+            start,
+            stop
+        });
+    }
     if (document.querySelector(".about__slider")) new core(".about__slider", {
-        modules: [ Navigation ],
+        modules: [ Navigation, Autoplay ],
         observer: true,
         observeParents: true,
         slidesPerView: 1,
         spaceBetween: 10,
         speed: 800,
+        loop: true,
+        lazy: true,
+        autoplay: {
+            delay: 3e3,
+            disableOnInteraction: false
+        },
         navigation: {
             prevEl: ".about__arrow-prev",
             nextEl: ".about__arrow-next"
@@ -5187,10 +5350,13 @@ PERFORMANCE OF THIS SOFTWARE.
                         script.src = "https://api-maps.yandex.ru/2.1/?modules=Map,Placemark&lang=ru_RU";
                         script.async = true;
                         script.onload = () => {
-                            ymaps.ready(initMainMap);
+                            if ("undefined" !== typeof ymaps) safeInitMap();
+                        };
+                        script.onerror = () => {
+                            console.error("Yandex Maps failed to load");
                         };
                         document.head.appendChild(script);
-                    } else ymaps.ready(initMainMap);
+                    } else safeInitMap();
                 }
             }));
         }), {
@@ -5198,22 +5364,25 @@ PERFORMANCE OF THIS SOFTWARE.
         });
         mapObserver.observe(mapElement);
     }
-    function initMainMap() {
-        requestIdleCallback((() => {
+    function safeInitMap() {
+        const callback = window.requestIdleCallback || function(cb) {
+            return setTimeout(cb, 0);
+        };
+        callback((() => {
             const mapElement = document.getElementById("map");
             if (!mapElement || "true" === mapElement.dataset.initialized) return;
             try {
                 const preview = mapElement.querySelector(".map-preview");
                 if (preview) preview.remove();
                 const myMap = new ymaps.Map("map", {
-                    center: [ 44.036938, 43.069484 ],
-                    zoom: 8,
+                    center: [ 59.890175, 30.411566 ],
+                    zoom: 15,
                     controls: [ "zoomControl" ],
                     behaviors: [ "drag" ]
                 }, {
                     searchControlProvider: "yandex#search"
                 });
-                const placemark1 = new ymaps.Placemark([ 43.918688, 42.701534 ], {}, {
+                const placemark1 = new ymaps.Placemark([ 59.890175, 30.411566 ], {}, {
                     iconLayout: "default#image",
                     iconImageHref: "img/icons/location.svg",
                     iconImageSize: [ 28, 36 ],
@@ -5222,7 +5391,7 @@ PERFORMANCE OF THIS SOFTWARE.
                 myMap.geoObjects.add(placemark1);
                 mapElement.dataset.initialized = "true";
             } catch (error) {
-                console.error("Ошибка при инициализации карты:", error);
+                console.error("Map init error:", error);
             }
         }));
     }
