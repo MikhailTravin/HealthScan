@@ -1628,6 +1628,8 @@ body {
 }
 
 .heatscan__image {
+  position: relative;
+  right: -403px;
   -webkit-transform: translateX(-403px);
       -ms-transform: translateX(-403px);
           transform: translateX(-403px);
@@ -4012,9 +4014,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
 
   .heatscan__image {
-    -webkit-transform: translateX(-453px);
-        -ms-transform: translateX(-453px);
-            transform: translateX(-453px);
+    right: -453px;
   }
 
   .banner__content {
@@ -4185,9 +4185,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
 
   .heatscan__image {
-    -webkit-transform: translateX(-25px);
-        -ms-transform: translateX(-25px);
-            transform: translateX(-25px);
+    right: -25px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
