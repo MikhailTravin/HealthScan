@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20250512234927">
+	<link rel="stylesheet" href="css/style.min.css?_v=20250522013108">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,8 @@
 			<div class="header__container">
 				<div class="header__content">
 					<a href="#" class="header__logo">
-						<picture><source srcset="img/icons/logo.webp" type="image/webp"><img src="img/icons/logo.png" alt=""></picture>
+						<picture><source srcset="img/icons/logo.webp" type="image/webp"><img class="logo1" src="img/icons/logo.png" alt=""></picture>
+						<picture><source srcset="img/icons/logo-mob.webp" type="image/webp"><img class="logo2" src="img/icons/logo-mob.png" alt=""></picture>
 					</a>
 					<div class="header__menu menu">
 						<button type="button" class="menu__icon icon-menu"><span></span></button>
@@ -198,7 +199,7 @@
 						</nav>
 					</div>
 					<div class="header__contacts">
-						<div class="header__socials">
+						<div data-da=".menu__body, 991.98" class="header__socials">
 							<a href="#">
 								<svg width="20" height="20">
 									<use xlink:href="img/icons/icons.svg#svg-instagram"></use>
@@ -219,6 +220,29 @@
 									<use xlink:href="img/icons/icons.svg#svg-linkdin"></use>
 								</svg>
 							</a>
+						</div>
+						<div class="header__lang lang-header">
+							<div class="lang-header__content">
+								<div class="lang-header__title">
+									<img src="img/icons/flag-rus.svg" alt="">
+									<span>RU</span>
+									<svg width="12" height="8">
+										<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+									</svg>
+								</div>
+								<div class="lang-header__body">
+									<ul>
+										<li>
+											<img src="img/icons/flag-rus.svg" alt="">
+											<span>RU</span>
+										</li>
+										<li>
+											<img src="img/icons/flag-rus.svg" alt="">
+											<span>RU</span>
+										</li>
+									</ul>
+								</div>
+							</div>
 						</div>
 						<a href="#" class="header__button button-white">Order</a>
 					</div>
@@ -253,7 +277,7 @@
 									</div>
 									<a data-watch data-watch-once href="#" class="top-main-home__button button-green">ORDER (price on request)</a>
 								</div>
-								<div class="main-home__center center-main-home">
+								<div data-da=".main-home__body, 1200, 2" class="main-home__center center-main-home">
 									<a data-watch data-watch-once href="#" class="center-main-home__column">
 										<img src="img/icons/youtube.svg" alt="">
 										<span>Video about HeatScan</span>
@@ -289,26 +313,50 @@
 							</div>
 						</div>
 						<div class="main-home__bottom bottom-main-home">
-							<div data-watch data-watch-once class="bottom-main-home__column">
-								<picture><source srcset="img/image3.webp" type="image/webp"><img loading="lazy" src="img/image3.png" alt=""></picture>
-								<div class="bottom-main-home__title">Deep analysis</div>
-								<div class="bottom-main-home__subtitle">
-									Search for metal defects through dirt and deposits with thickness of up to 35mm
+							<div class="bottom-main-home__slider swiper">
+								<div class="bottom-main-home__wrapper swiper-wrapper">
+									<div class="bottom-main-home__slide swiper-slide">
+										<div data-watch data-watch-once class="bottom-main-home__column">
+											<picture><source srcset="img/image3.webp" type="image/webp"><img loading="lazy" src="img/image3.png" alt=""></picture>
+											<div class="bottom-main-home__title">Deep analysis</div>
+											<div class="bottom-main-home__subtitle">
+												Search for metal defects through dirt and deposits with thickness of up
+												to 35mm
+											</div>
+										</div>
+									</div>
+									<div class="bottom-main-home__slide swiper-slide">
+										<div data-watch data-watch-once class="bottom-main-home__column">
+											<picture><source srcset="img/image4.webp" type="image/webp"><img loading="lazy" src="img/image4.png" alt=""></picture>
+											<div class="bottom-main-home__title">6 cameras</div>
+											<div class="bottom-main-home__subtitle">
+												6 built-in cameras and a laser profilometer allow you to analyze the
+												geometry of
+												the pipe
+											</div>
+										</div>
+									</div>
+									<div class="bottom-main-home__slide swiper-slide">
+										<div data-watch data-watch-once class="bottom-main-home__column">
+											<picture><source srcset="img/image5.webp" type="image/webp"><img loading="lazy" src="img/image5.png" alt=""></picture>
+											<div class="bottom-main-home__title">Compact Scan</div>
+											<div class="bottom-main-home__subtitle">
+												Loaded through a 400x600 mm cut in the pipe
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div data-watch data-watch-once class="bottom-main-home__column">
-								<picture><source srcset="img/image4.webp" type="image/webp"><img loading="lazy" src="img/image4.png" alt=""></picture>
-								<div class="bottom-main-home__title">6 cameras</div>
-								<div class="bottom-main-home__subtitle">
-									6 built-in cameras and a laser profilometer allow you to analyze the geometry of
-									the pipe
+							<div class="bottom-main-home__arrows arrows">
+								<div class="bottom-main-home__arrow-prev arrow-prev">
+									<svg width="10" height="14">
+										<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+									</svg>
 								</div>
-							</div>
-							<div data-watch data-watch-once class="bottom-main-home__column">
-								<picture><source srcset="img/image5.webp" type="image/webp"><img loading="lazy" src="img/image5.png" alt=""></picture>
-								<div class="bottom-main-home__title">Compact Scan</div>
-								<div class="bottom-main-home__subtitle">
-									Loaded through a 400x600 mm cut in the pipe
+								<div class="bottom-main-home__arrow-next arrow-next">
+									<svg width="10" height="14">
+										<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+									</svg>
 								</div>
 							</div>
 						</div>
@@ -489,35 +537,53 @@
 			</div>
 			<div data-watch data-watch-once class="gallery">
 				<div class="gallery__container">
-					<div data-watch data-watch-once data-gallery class="gallery__photos">
-						<a data-watch data-watch-once href="img/product/image1.png" class="gallery__item gallery__item--image-1">
-							<picture><source srcset="img/product/image1.webp" type="image/webp"><img loading="lazy" src="img/product/image1.png" alt=""></picture>
-						</a>
-						<a data-watch data-watch-once href="img/product/image2.png" class="gallery__item gallery__item--image-2">
-							<picture><source srcset="img/product/image2.webp" type="image/webp"><img loading="lazy" src="img/product/image2.png" alt=""></picture>
-						</a>
-						<a data-watch data-watch-once href="img/product/image3.png" class="gallery__item gallery__item--image-3">
-							<picture><source srcset="img/product/image3.webp" type="image/webp"><img loading="lazy" src="img/product/image3.png" alt=""></picture>
-						</a>
-						<a data-watch data-watch-once href="img/product/image4.png" class="gallery__item gallery__item--image-4">
-							<picture><source srcset="img/product/image4.webp" type="image/webp"><img loading="lazy" src="img/product/image4.png" alt=""></picture>
-						</a>
-						<a data-watch data-watch-once href="img/product/image5.png" class="gallery__item gallery__item--image-5">
-							<picture><source srcset="img/product/image5.webp" type="image/webp"><img loading="lazy" src="img/product/image5.png" alt=""></picture>
-						</a>
-						<a data-watch data-watch-once href="img/product/image1.png" class="gallery__item gallery__item--image-6">
-							<picture><source srcset="img/product/image6.webp" type="image/webp"><img loading="lazy" src="img/product/image6.png" alt=""></picture>
-						</a>
+					<div class="gallery__slider swiper">
+						<div class="gallery__wrapper swiper-wrapper">
+							<div class="gallery__slide swiper-slide">
+								<div data-watch data-watch-once data-gallery class="gallery__photos">
+									<a data-watch data-watch-once href="img/product/image1.png" class="gallery__item gallery__item--image-1">
+										<picture><source srcset="img/product/image1.webp" type="image/webp"><img loading="lazy" src="img/product/image1.png" alt=""></picture>
+									</a>
+									<a data-watch data-watch-once href="img/product/image2.png" class="gallery__item gallery__item--image-2">
+										<picture><source srcset="img/product/image2.webp" type="image/webp"><img loading="lazy" src="img/product/image2.png" alt=""></picture>
+									</a>
+									<a data-watch data-watch-once href="img/product/image3.png" class="gallery__item gallery__item--image-3">
+										<picture><source srcset="img/product/image3.webp" type="image/webp"><img loading="lazy" src="img/product/image3.png" alt=""></picture>
+									</a>
+									<a data-watch data-watch-once href="img/product/image4.png" class="gallery__item gallery__item--image-4">
+										<picture><source srcset="img/product/image4.webp" type="image/webp"><img loading="lazy" src="img/product/image4.png" alt=""></picture>
+									</a>
+									<a data-watch data-watch-once href="img/product/image5.png" class="gallery__item gallery__item--image-5">
+										<picture><source srcset="img/product/image5.webp" type="image/webp"><img loading="lazy" src="img/product/image5.png" alt=""></picture>
+									</a>
+									<a data-watch data-watch-once href="img/product/image1.png" class="gallery__item gallery__item--image-6">
+										<picture><source srcset="img/product/image6.webp" type="image/webp"><img loading="lazy" src="img/product/image6.png" alt=""></picture>
+									</a>
+								</div>
+								<div data-watch data-watch-once class="gallery__videos">
+									<a target="_blank" href="https://www.youtube.com/embed/-D-ePGm3J-4?autoplay=1" data-watch data-watch-once class="gallery__video">
+										<picture><source srcset="img/video-image1.webp" type="image/webp"><img loading="lazy" src="img/video-image1.png" alt="Видео превью" class="preview-image"></picture>
+										<button class="play-button">▶</button>
+									</a>
+									<a target="_blank" href="https://www.youtube.com/embed/-D-ePGm3J-4?autoplay=1" data-watch data-watch-once class="gallery__video">
+										<picture><source srcset="img/video-image2.webp" type="image/webp"><img loading="lazy" src="img/video-image2.png" alt="Видео превью" class="preview-image"></picture>
+										<button class="play-button">▶</button>
+									</a>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div data-watch data-watch-once class="gallery__videos">
-						<a target="_blank" href="https://www.youtube.com/embed/-D-ePGm3J-4?autoplay=1" data-watch data-watch-once class="gallery__video">
-							<picture><source srcset="img/video-image1.webp" type="image/webp"><img loading="lazy" src="img/video-image1.png" alt="Видео превью" class="preview-image"></picture>
-							<button class="play-button">▶</button>
-						</a>
-						<a target="_blank" href="https://www.youtube.com/embed/-D-ePGm3J-4?autoplay=1" data-watch data-watch-once class="gallery__video">
-							<picture><source srcset="img/video-image2.webp" type="image/webp"><img loading="lazy" src="img/video-image2.png" alt="Видео превью" class="preview-image"></picture>
-							<button class="play-button">▶</button>
-						</a>
+					<div class="gallery__arrows arrows">
+						<div class="gallery__arrow-prev arrow-prev">
+							<svg width="10" height="14">
+								<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+							</svg>
+						</div>
+						<div class="gallery__arrow-next arrow-next">
+							<svg width="10" height="14">
+								<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+							</svg>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -530,55 +596,84 @@
 						</p>
 					</div>
 					<div data-watch data-watch-once class="test__content">
-						<div data-watch data-watch-once class="test__column">
-							<div class="test__image">
-								<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
-								<div data-watch data-watch-once class="test__number">1</div>
-							</div>
-							<div data-watch data-watch-once class="test__title">Installation</div>
-							<div class="test__text">
-								<p data-watch data-watch-once>
-									Inspection requires access to the pipe: the robot is loaded through a cut in the
-									pipe. The cut can be made in a heat chamber or via a pit.
-								</p>
-								<p data-watch data-watch-once>
-									The diagnostic system, including the control panel, is located in the auto
-									laboratory based on a category B vehicle.
-								</p>
-							</div>
-						</div>
-						<div data-watch data-watch-once class="test__column">
-							<div class="test__image">
-								<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
-								<div data-watch data-watch-once class="test__number">2</div>
-							</div>
-							<div data-watch data-watch-once class="test__title">Connection</div>
-							<div class="test__text">
-								<p data-watch data-watch-once>
-									Electrical wires must be connected to the ends of the tested pipe section.
+						<div class="test__slider swiper">
+							<div class="test__wrapper swiper-wrapper">
+								<div class="test__slide swiper-slide">
+									<div data-watch data-watch-once class="test__column">
+										<div class="test__image">
+											<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
+											<div data-watch data-watch-once class="test__number">1</div>
+										</div>
+										<div data-watch data-watch-once class="test__title">Installation</div>
+										<div class="test__text">
+											<p data-watch data-watch-once>
+												Inspection requires access to the pipe: the robot is loaded through a
+												cut in the
+												pipe. The cut can be made in a heat chamber or via a pit.
+											</p>
+											<p data-watch data-watch-once>
+												The diagnostic system, including the control panel, is located in the
+												auto
+												laboratory based on a category B vehicle.
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="test__slide swiper-slide">
+									<div data-watch data-watch-once class="test__column">
+										<div class="test__image">
+											<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
+											<div data-watch data-watch-once class="test__number">2</div>
+										</div>
+										<div data-watch data-watch-once class="test__title">Connection</div>
+										<div class="test__text">
+											<p data-watch data-watch-once>
+												Electrical wires must be connected to the ends of the tested pipe
+												section.
 
-								</p>
-								<p data-watch data-watch-once>
-									Electrical current is transmitted through the pipe; this is necessary to excite
-									magnetic fields with distribution read by the sensors of robot located inside the
-									pipe.
-								</p>
+											</p>
+											<p data-watch data-watch-once>
+												Electrical current is transmitted through the pipe; this is necessary to
+												excite
+												magnetic fields with distribution read by the sensors of robot located
+												inside the
+												pipe.
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="test__slide swiper-slide">
+									<div data-watch data-watch-once class="test__column">
+										<div class="test__image">
+											<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
+											<div data-watch data-watch-once class="test__number">3</div>
+										</div>
+										<div data-watch data-watch-once class="test__title">Scanning</div>
+										<div class="test__text">
+											<p data-watch data-watch-once>
+												The diagnostic robot moves inside the pipe scanning 100% of the pipe
+												area. The
+												sensors detect magnetic field anomalies in defect areas.
+											</p>
+											<p data-watch data-watch-once>
+												Using a special algorithm, the program determines the residual metal
+												thickness.
+											</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div data-watch data-watch-once class="test__column">
-							<div class="test__image">
-								<picture><source srcset="img/test.webp" type="image/webp"><img loading="lazy" src="img/test.png" alt=""></picture>
-								<div data-watch data-watch-once class="test__number">3</div>
+						<div class="test__arrows arrows">
+							<div class="test__arrow-prev arrow-prev">
+								<svg width="10" height="14">
+									<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+								</svg>
 							</div>
-							<div data-watch data-watch-once class="test__title">Scanning</div>
-							<div class="test__text">
-								<p data-watch data-watch-once>
-									The diagnostic robot moves inside the pipe scanning 100% of the pipe area. The
-									sensors detect magnetic field anomalies in defect areas.
-								</p>
-								<p data-watch data-watch-once>
-									Using a special algorithm, the program determines the residual metal thickness.
-								</p>
+							<div class="test__arrow-next arrow-next">
+								<svg width="10" height="14">
+									<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
+								</svg>
 							</div>
 						</div>
 					</div>
@@ -656,13 +751,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="about__arrows">
-								<div class="about__arrow-prev">
+							<div class="about__arrows arrows">
+								<div class="about__arrow-prev arrow-prev">
 									<svg width="8" height="10">
 										<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
 									</svg>
 								</div>
-								<div class="about__arrow-next">
+								<div class="about__arrow-next arrow-next">
 									<svg width="8" height="10">
 										<use xlink:href="img/icons/icons.svg#svg-arrow"></use>
 									</svg>
@@ -714,7 +809,7 @@
 							<picture><source srcset="img/icons/logo.webp" type="image/webp"><img loading="lazy" class="footer__logo1" src="img/icons/logo.png" alt=""></picture>
 							<picture><source srcset="img/icons/logo2.webp" type="image/webp"><img loading="lazy" class="footer__logo2" src="img/icons/logo2.png" alt=""></picture>
 						</a>
-						<div class="footer__socials">
+						<div data-da=".footer__content, 991.98, last" class="footer__socials">
 							<a href="#">
 								<svg width="26" height="20">
 									<use xlink:href="img/icons/icons.svg#svg-youtube"></use>
@@ -818,8 +913,8 @@
 			</div>
 		</footer>
 	</div>
-	<!--<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&amp;lang=ru_RU&amp;_v=20240623012845&_v=20250512234927"></script>-->
-	<script src="js/app.min.js?_v=20250512234927"></script>
+	<!--<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&amp;lang=ru_RU&amp;_v=20240623012845&_v=20250522013108"></script>-->
+	<script src="js/app.min.js?_v=20250522013108"></script>
 </body>
 
 </html>
