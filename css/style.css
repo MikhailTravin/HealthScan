@@ -1628,11 +1628,8 @@ body {
 }
 
 .heatscan__image {
-  position: relative;
+  position: absolute;
   right: -403px;
-  -webkit-transform: translateX(-403px);
-      -ms-transform: translateX(-403px);
-          transform: translateX(-403px);
   height: 549px;
   opacity: 0;
   -webkit-transition: opacity 1.5s ease;
@@ -2301,6 +2298,9 @@ body {
 }
 
 .play-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4185,6 +4185,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
 
   .heatscan__image {
+    position: relative;
     right: -25px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4193,6 +4194,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
+    margin: 0px -15px;
   }
 
   .heatscan__image img {
