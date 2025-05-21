@@ -1637,6 +1637,11 @@ body {
   transition: opacity 1.5s ease;
 }
 
+.heatscan__image picture {
+  width: auto;
+  height: 100%;
+}
+
 .heatscan__image img {
   width: auto;
   height: 100%;
@@ -4195,6 +4200,11 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
         -ms-flex-pack: end;
             justify-content: flex-end;
     margin: 0px -15px;
+  }
+
+  .heatscan__image picture {
+    width: 100%;
+    height: auto;
   }
 
   .heatscan__image img {
