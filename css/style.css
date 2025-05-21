@@ -4043,6 +4043,11 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
     padding: 0px 0px 80px 0px;
   }
 
+  .gallery__slider {
+    margin: 0px -15px;
+    padding: 0px 15px;
+  }
+
   .gallery__photos {
     gap: 40px 28px;
   }
@@ -4426,11 +4431,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
             flex: 1 1 auto;
   }
 
-  .gallery__slider {
-    margin: 0px -15px;
-    padding: 0px 15px;
-  }
-
   .gallery__arrows {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4680,6 +4680,11 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
     height: 47px;
     font-size: 22px;
     border-radius: 10px;
+  }
+
+  .play-button svg {
+    width: 17px;
+    height: 21px;
   }
 
   .test {
