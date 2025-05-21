@@ -1628,6 +1628,7 @@ body {
 }
 
 .heatscan__image {
+  margin: 0px -403px 0px 0px;
   height: 549px;
   opacity: 0;
   -webkit-transform: translateY(20px);
@@ -4016,6 +4017,10 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
     margin: 20px 0px 0px 84px;
   }
 
+  .heatscan__image {
+    margin: 0px -453px 0px 0px;
+  }
+
   .banner__content {
     padding: 142px 95px 112px 95px;
   }
@@ -4184,6 +4189,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
 
   .heatscan__image {
+    margin: 0px -25px 0px 0px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
