@@ -2303,6 +2303,7 @@ body {
 }
 
 .play-button {
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -2330,6 +2331,14 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.play-button::-webkit-media-controls {
+  display: none !important;
+}
+
+.play-button::-webkit-media-controls-play-button {
+  display: none !important;
 }
 
 .test {
