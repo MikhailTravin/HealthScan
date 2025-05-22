@@ -5636,8 +5636,8 @@ PERFORMANCE OF THIS SOFTWARE.
             const preview = mapElement.querySelector(".map-preview");
             if (preview) preview.remove();
             const myMap = new ymaps.Map("map", {
-                center: [ 59.889575, 30.411018 ],
-                zoom: 18,
+                center: [ 59.890857, 30.411512 ],
+                zoom: 17,
                 controls: [ "zoomControl" ]
             });
             myMap.options.set("styles", [ {
