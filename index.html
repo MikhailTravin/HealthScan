@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20250523021914">
+	<link rel="stylesheet" href="css/style.min.css?_v=20250525031011">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -276,7 +276,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="#" class="header__button button-white">Order</a>
+						<a href="#" data-popup="#feedback" class="header__button button-white">Order</a>
 					</div>
 				</div>
 			</div>
@@ -307,7 +307,7 @@
 										One of the most optimal devices on the pipe
 										inspection market
 									</div>
-									<a data-watch data-watch-once href="#" class="top-main-home__button button-green">ORDER (price on request)</a>
+									<a data-watch data-watch-once href="#" data-popup="#feedback" class="top-main-home__button button-green">ORDER (price on request)</a>
 								</div>
 								<div data-da=".main-home__body, 1200, 2" class="main-home__center center-main-home">
 									<a data-watch data-watch-once href="#" class="center-main-home__column">
@@ -447,7 +447,7 @@
 								</div>
 							</div>
 							<div class="heatscan__buttons">
-								<a data-watch data-watch-once href="#" class="heatscan__button button-green">ORDER
+								<a data-watch data-watch-once href="#" data-popup="#feedback" class="heatscan__button button-green">ORDER
 									(price on request)</a>
 								<a href="#" class="heatscan__link">
 									<img loading="lazy" src="img/icons/pdf.svg" alt="">
@@ -954,8 +954,60 @@
 			</div>
 		</footer>
 	</div>
-	<!--<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&amp;lang=ru_RU&amp;_v=20240623012845&_v=20250523021914"></script>-->
-	<script src="js/app.min.js?_v=20250523021914"></script>
+	<div id="feedback" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close">
+					<svg width="20" height="20">
+						<use xlink:href="img/icons/icons.svg#svg-close"></use>
+					</svg>
+				</button>
+				<div class="popup__forms">
+					<div class="forms__header">
+						<div data-watch data-watch-once class="forms__title">
+							Need More Information?
+						</div>
+						<div data-watch data-watch-once class="forms__subtitle">
+							We are ready to answer any of your questions.
+						</div>
+					</div>
+					<form data-dev action="#" data-popup-message="#thanks" class="forms__form">
+						<div data-watch data-watch-once class="forms__inputs">
+							<div class="forms__input">
+								<input autocomplete="off" type="text" name="form[]" data-error="Required field" placeholder="Full name">
+							</div>
+							<div class="forms__input">
+								<input data-required autocomplete="off" type="text" name="form[]" data-error="Required field" placeholder="Phone">
+							</div>
+							<div class="forms__input">
+								<input data-required="email" autocomplete="off" type="text" name="form[]" data-error="Required field" placeholder="E-mail">
+							</div>
+						</div>
+						<button type="submit" class="forms__button button-green">SEND</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="thanks" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close">
+					<svg width="20" height="20">
+						<use xlink:href="img/icons/icons.svg#svg-close"></use>
+					</svg>
+				</button>
+				<div class="popup__forms">
+					<div class="forms__text">
+						The application has been sent
+					</div>
+					<button type="submit" data-close class="forms__button button-green">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/app.min.js?_v=20250525031011"></script>
 </body>
 
 </html>
