@@ -1,0 +1,136 @@
+.title1 {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 130%;
+    text-transform: capitalize;
+    color: #fff;
+    @media (max-width: $tablet) {
+        font-size: 45px;
+    }
+    @media (max-width: $mobile) {
+        font-size: 32px;
+    }
+}
+
+.title2 {
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 130%;
+    @media (max-width: $mobile) {
+        font-size: 32px;
+    }
+}
+
+.heading {
+    margin: 0px 0px 40px 0px;
+    @media (max-width: $mobile) {
+        margin: 0px 0px 24px 0px;
+    }
+    p {
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.6);
+        margin: 16px 0px 0px 0px;
+        @media (max-width: $mobile) {
+            margin: 16px 10px 0px 10px;
+        }
+    }
+}
+
+.heading-white {
+    margin: 0px 0px 40px 0px;
+    .title2 {
+        color: #fff;
+        letter-spacing: 0px;
+    }
+    p {
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 16px 0px 0px 0px;
+    }
+}
+
+.arrows {
+    position: absolute;
+    bottom: auto;
+    top: 50%;
+    transform: translate(0px, -50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    gap: 12px;
+    @media (max-width: 1440px) {
+        position: relative;
+        justify-content: center;
+        top: 0;
+        transform: translate(0px, 0px);
+        margin: 24px 0px 0px 0px;
+    }
+}
+
+.arrow-next {
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 18px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease 0s;
+    color: $mainColor;
+    svg {
+        transform: rotate(-90deg);
+        fill: currentColor;
+    }
+    &.swiper-button-disabled {
+        display: none;
+        svg {
+            fill: #817e7b !important;
+        }
+        @media (max-width: 1440px) {
+            display: flex;
+        }
+    }
+    &:hover {
+        background-color: $green;
+    }
+}
+
+.arrow-prev {
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 18px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease 0s;
+    color: $mainColor;
+    svg {
+        transform: rotate(90deg);
+        fill: currentColor;
+    }
+    &.swiper-button-disabled {
+        display: none;
+        svg {
+            fill: #817e7b !important;
+        }
+        @media (max-width: 1440px) {
+            display: flex;
+        }
+    }
+    &:hover {
+        background-color: $green;
+    }
+}
