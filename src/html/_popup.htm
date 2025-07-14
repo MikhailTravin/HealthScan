@@ -1,0 +1,56 @@
+<div id="feedback" aria-hidden="true" class="popup">
+	<div class="popup__wrapper">
+		<div class="popup__content">
+			<button data-close type="button" class="popup__close">
+				<svg width="20" height="20">
+					<use xlink:href="../img/icons/icons.svg#svg-close"></use>
+				</svg>
+			</button>
+			<div class="popup__forms">
+				<div class="forms__header">
+					<div data-watch data-watch-once class="forms__title">
+						Need More Information?
+					</div>
+					<div data-watch data-watch-once class="forms__subtitle">
+						We are ready to answer any of your questions.
+					</div>
+				</div>
+				<form data-dev action="#" data-popup-message="#thanks" class="forms__form">
+					<div data-watch data-watch-once class="forms__inputs">
+						<div class="forms__input">
+							<input autocomplete="off" type="text" name="form[]" data-error="Required field"
+								placeholder="Full name">
+						</div>
+						<div class="forms__input">
+							<input data-required autocomplete="off" type="text" name="form[]"
+								data-error="Required field" placeholder="Phone">
+						</div>
+						<div class="forms__input">
+							<input data-required="email" autocomplete="off" type="text" name="form[]" data-error="Required field"
+								placeholder="E-mail">
+						</div>
+					</div>
+					<button type="submit" class="forms__button button-green">SEND</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="thanks" aria-hidden="true" class="popup">
+	<div class="popup__wrapper">
+		<div class="popup__content">
+			<button data-close type="button" class="popup__close">
+				<svg width="20" height="20">
+					<use xlink:href="../img/icons/icons.svg#svg-close"></use>
+				</svg>
+			</button>
+			<div class="popup__forms">
+				<div class="forms__text">
+					The application has been sent
+				</div>
+				<button type="submit" data-close class="forms__button button-green">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
