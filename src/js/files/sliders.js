@@ -8,7 +8,7 @@
 // При необходимости подключаем дополнительные модули слайдера, указывая их в {} через запятую
 // Пример: { Navigation, Autoplay }
 import Swiper from 'swiper';
-import { Navigation, Autoplay, FreeMode } from 'swiper';
+import { Navigation, Autoplay, FreeMode, Pagination } from 'swiper';
 /*
 Основные модули слайдера:
 Navigation, Pagination, Autoplay, 
@@ -61,6 +61,33 @@ if (document.querySelector('.bottom-main-home__slider')) { // Указываем
 				slidesPerView: 3,
 				spaceBetween: 28,
 			},
+		},
+
+	});
+}
+
+if (document.querySelector('.main-home__slider')) { // Указываем склад нужного слайдера
+	// Создаем слайдер
+	new Swiper('.main-home__slider', { // Указываем склад нужного слайдера
+		// Подключаем модули слайдера
+		// для конкретного случая
+		modules: [Navigation, Pagination, Autoplay],
+		observer: true,
+		observeParents: true,
+		slidesPerView: 1,
+		spaceBetween: 20,
+		speed: 800,
+		lazy: true,
+		loop: true, 
+		autoplay: {
+			delay: 3000,
+			disableOnInteraction: false,
+		},
+
+		// Пагинация
+		pagination: {
+			el: '.main-home__pagination',
+			clickable: true,
 		},
 
 	});

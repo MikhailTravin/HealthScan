@@ -1,6 +1,6 @@
 function indents() {
     const header = document.querySelector('.header');
-    const page = document.querySelector('.main-home');
+    const page = document.querySelector('.main');
 
     //Оступ от шапки
     let hHeader = window.getComputedStyle(header, false).height;
