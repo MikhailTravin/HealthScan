@@ -1,42 +1,35 @@
 @font-face {
-	font-family: TTHovesProTrial;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial Black.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial Black.woff") format("woff");
+	src: url("../fonts/NunitoSans-Black.woff2") format("woff2"), url("../fonts/NunitoSans-Black.woff") format("woff");
 	font-weight: 900;
 	font-style: normal;
 }
 @font-face {
-	font-family: TTHovesProTrial;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial Bold.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial Bold.woff") format("woff");
+	src: url("../fonts/NunitoSans-Bold.woff2") format("woff2"), url("../fonts/NunitoSans-Bold.woff") format("woff");
 	font-weight: 700;
 	font-style: normal;
 }
 @font-face {
-	font-family: TTHovesProTrial;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial Light.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial Light.woff") format("woff");
-	font-weight: 300;
+	src: url("../fonts/NunitoSans-ExtraBold.woff2") format("woff2"), url("../fonts/NunitoSans-ExtraBold.woff") format("woff");
+	font-weight: 800;
 	font-style: normal;
 }
 @font-face {
-	font-family: TTHovesProTrial;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial DemiBold.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial DemiBold.woff") format("woff");
-	font-weight: 600;
-	font-style: normal;
-}
-@font-face {
-	font-family: TTHovesProTrial;
-	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial Medium.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial Medium.woff") format("woff");
-	font-weight: 500;
-	font-style: normal;
-}
-@font-face {
-	font-family: TTHovesProTrial;
-	font-display: swap;
-	src: url("../fonts/TT Hoves Pro Trial Regular.woff2") format("woff2"), url("../fonts/TT Hoves Pro Trial Regular.woff") format("woff");
+	src: url("../fonts/NunitoSans-Regular.woff2") format("woff2"), url("../fonts/NunitoSans-Regular.woff") format("woff");
 	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: NunitoSans;
+	font-display: swap;
+	src: url("../fonts/NunitoSans-SemiBold.woff2") format("woff2"), url("../fonts/NunitoSans-SemiBold.woff") format("woff");
+	font-weight: 600;
 	font-style: normal;
 }
