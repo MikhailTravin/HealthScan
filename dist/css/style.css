@@ -1371,10 +1371,6 @@ body::after {
   left: 0;
 }
 
-.main-home__slider .main-home__left {
-  padding: 0px 0px 170px 0px;
-}
-
 .top-main-home {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5315,6 +5311,10 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
     -webkit-box-direction: reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
+  }
+
+  .main-home__slider .main-home__left {
+    padding: 0px 0px 170px 0px;
   }
 
   .main-home__slider .main-home__image {
