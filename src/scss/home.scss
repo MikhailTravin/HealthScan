@@ -267,6 +267,34 @@
         .main-home__bg-2 {
             left: 0;
         }
+        .main-home__body {
+            @media (max-width: 1200px) {
+                flex-direction: column-reverse;
+            }
+        }
+        .main-home__left {
+            @media (max-width: 1200px) {
+                padding: 0px 0px 170px 0px;
+            }
+            @media (max-width: 768px) {
+                padding: 0px 0px 100px 0px;
+            }
+        }
+        .main-home__image {
+            @media (max-width: 1200px) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .main-home__img {
+            @media (max-width: 1200px) {
+                width: 50%;
+            }
+            @media (max-width: 768px) {
+                width: 80%;
+            }
+        }
     }
 
     // .main-home__wrapper
